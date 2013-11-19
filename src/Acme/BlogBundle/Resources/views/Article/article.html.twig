@@ -1,0 +1,29 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/article.html.twig #}
+
+{% extends 'AcmeBlogBundle::layout.html.twig' %}
+
+
+{% block content %}
+<div class="article">
+  <h1>{{ article.getTitle }}</h1>
+  <p>{{ article.getText }}</p>
+  <p class="date">Přidáno: {{ article.getDate|date('d.m.Y | H:i') }} <span class="right"><a href="{{ path('acme_blog_homepage') }}">Zpět na hlavní stánku</a></span></p>
+</div>
+<div id="comments">
+  <h3>Přidat komentář</h3>
+  
+  {#{ form(form) }#}
+  
+  {#{ form_widget(form) }#}
+  
+  {{ form_start(form) }}
+    <table>
+    <tr><td>{{ form_label(form.nickname, 'Jméno:') }}&nbsp;</td><td>{{ form_widget(form.nickname) }} *(max. 30 znaků)</td></tr>
+        <tr><td class="top">{{ form_label(form.text, 'Text:') }}</td><td class="top">{{ form_widget(form.text) }} *(max. 2500 znaků)</td></tr>
+    <tr><td></td><td>{{ form_widget(form.submit, { 'label': 'Přidat komentář' }) }}</td></tr>	  
+    </table>  
+  {{ form_end(form) }}
+
+  <h3>Všechny komentáře (10)</h3>
+</div>
+{% endblock %}

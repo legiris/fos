@@ -1,0 +1,14 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
+
+{% extends 'AcmeBlogBundle::layout.html.twig' %}
+
+{% block content %}
+  {% for article in articles %}
+    <div class="article">
+      <h1>{{ article.getTitle }}</h1>
+      <p>{{ article.getText|slice(0, 200) }} ... <a href="{{ path('acme_blog_article', {'id': article.getId}) }}" 
+													title="{{ article.getTitle }}">celý&nbsp;článek</a></p>
+      <p class="date">Přidáno: {{ article.getDate|date('d.m.Y | H:i') }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}

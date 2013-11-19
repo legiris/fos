@@ -1,0 +1,12 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/menu.html.twig #}
+
+{#% extends 'AcmeBlogBundle::layout.html.twig' %#}
+
+{% block menu %}
+  <ul>
+    <li class="title">Nejnovější</li>
+    {% for new in news %}
+      <li><a href="{{ path('acme_blog_article', {'id': new.getId}) }}">{{ new.getTitle }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

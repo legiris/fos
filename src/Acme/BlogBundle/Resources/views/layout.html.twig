@@ -1,0 +1,25 @@
+{# src/Acme/BlogBundle/Resources/views/layout.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/acmeblog/css/blog.css') }}" />
+{% endblock %}
+
+{% block title 'Můj blogísek' %}
+
+{% block body %}
+<div id="page">
+  <div id="top-menu"></div>
+  <div id="left-page">	
+   {% block menu %}
+    {#% render url('latest_articles') %#}
+    {{ render(controller('AcmeBlogBundle:Article:latestArticles', {'count': 5} )) }}
+   {% endblock %}
+  </div>
+  <div id="middle-page">
+   {% block content %}
+   {% endblock %}
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,12 @@
+acme_blog_homepage:
+    pattern: /
+    defaults: { _controller: AcmeBlogBundle:Homepage:index }
+    
+acme_blog_article:
+    path: /article/{id}
+    defaults: { _controller: AcmeBlogBundle:Article:article }
+    
+#latest_articles:
+    #path: /latest_articles
+    #pattern: /articles/latest/
+    #defaults: { _controller: AcmeBlogBundle:Article:latestArticles }
