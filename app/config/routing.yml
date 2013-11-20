@@ -2,6 +2,18 @@
 #    resource: "@AcmeBlogBundle/Resources/config/routing.yml"
 #    prefix:   /
 
-article:
+# single RESTful
+#article:
+     #type: rest
+     #resource: Acme\BlogBundle\Controller\ArticleController
+     #resource: Acme\BlogBundle\Controller\CommentController
+
+# multiple RESTful     
+acme_blog:
      type: rest
-     resource: Acme\BlogBundle\Controller\ArticleController
+     resource: "@AcmeBlogBundle/Resources/config/routing.yml"
+
+# single RESTful     
+homepage:
+     type: rest
+     resource: Acme\BlogBundle\Controller\HomepageController     

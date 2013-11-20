@@ -6,7 +6,17 @@
 #    path: /article/{id}
 #    defaults: { _controller: AcmeBlogBundle:Article:article }
     
-##latest_articles:
-    ##path: /latest_articles
-    ##pattern: /articles/latest/
-    ##defaults: { _controller: AcmeBlogBundle:Article:latestArticles }
+#latest_articles:
+    #path: /latest_articles
+    #pattern: /articles/latest/
+    #defaults: { _controller: AcmeBlogBundle:Article:latestArticles }
+
+# multiple RESTful    
+articles:
+     type: rest
+     resource: Acme\BlogBundle\Controller\ArticleController
+     
+comments:
+     type: rest
+     parent: articles
+     resource: Acme\BlogBundle\Controller\CommentController

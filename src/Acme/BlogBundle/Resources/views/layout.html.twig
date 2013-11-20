@@ -13,7 +13,7 @@
   <div id="left-page">	
    {% block menu %}
     {##% render url('latest_articles') %##}
-    {#{ render(controller('AcmeBlogBundle:Article:latestArticles', {'count': 5} )) }#}
+    {{ render(controller('AcmeBlogBundle:Article:getLatest', {'count': 5} )) }}
    {% endblock %}
   </div>
   <div id="middle-page">

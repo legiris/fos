@@ -2,9 +2,6 @@
 
 namespace Acme\BlogBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -83,6 +80,11 @@ class ArticleController extends BaseController
         return new Response('<html><body> new_articles </body></html>');
     }
     
+    public function deleteArticleAction($id)
+    {
+        return new Response('<html><body> delete_article '. $id .'</body></html>');
+    }
+    
     /**
      * REST API -- zobrazeni vsech clanku
      * http://localhost/web/fos/web/app_dev.php/articles
@@ -123,5 +125,23 @@ class ArticleController extends BaseController
         ));
     }
     
+    
+    /**
+     * vybere nejnovejsi clanky
+     * @param int $count
+     * @return array
+     */
+    public function getLatestAction($count)
+    {
+        $articles = $this->getDoctrine()->getManager()->createQuery('
+            SELECT a
+            FROM AcmeBlogBundle:Article a
+            ORDER BY a.date DESC			
+        ')->setMaxResults($count)->getResult();
+		
+        return $this->render('AcmeBlogBundle:Article:latestArticles.html.twig',
+            array('news' => $articles)
+        );
+    }
     
 }
