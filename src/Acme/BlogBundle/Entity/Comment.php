@@ -85,7 +85,7 @@ class Comment
         $this->date = $date;
     }
 
-    public function setArticle($article)
+    public function setArticle(Article $article)
     {
         $this->article = $article;
     }
