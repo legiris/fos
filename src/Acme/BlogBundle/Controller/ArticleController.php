@@ -3,6 +3,8 @@
 namespace Acme\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Acme\BlogBundle\Entity\Comment;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Description of ArticleController
@@ -11,43 +13,29 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ArticleController extends BaseController
 {
+
     /**
-     * zobrazi detail clanku a formular
-     * @param int $id
+     * vybere a zobrazi vsechny clanky, pro zobrazeni homepage
      * @return array
      */
-    public function ArticleAction($id)
-    {
-        //return new Response('<html><body>Hello ' . $id . '</body></html>');
-        return $this->render('AcmeBlogBundle:Article:article.html.twig', array(
-            'article' => $this->getDoctrine()
-                ->getRepository('AcmeBlogBundle:Article')
-                ->findOneBy(array(
-                    'id' => $id)),
-            'form' => $this->addForm()
-        ));
+    public function getAction()
+    {	
+        return $this->render('AcmeBlogBundle:Article:index.html.twig', array(
+            'articles' => $this->getDoctrine()->getEntityManager()
+                ->getRepository('AcmeBlogBundle:Article')->fetchAll()
+        ));	
     }
-	
-    /**
-     * vybere nejnovejsi clanky
-     * @param int $count
-     * @return array
+   
+    /*
+     * formular pro pridani komentare
      */
-    public function latestArticlesAction($count)
-    {
-        $articles = $this->getDoctrine()->getManager()->createQuery('
-            SELECT a
-            FROM AcmeBlogBundle:Article a
-            ORDER BY a.date DESC			
-        ')->setMaxResults($count)->getResult();
-		
-        return $this->render('AcmeBlogBundle:Article:latestArticles.html.twig',
-            array('news' => $articles)
-        );
-    }
-	
     public function addForm()
     {
+        //$comment = new Comment;
+        //$comment->setNickname('Seeker');
+        //$comment->setText('Dragon Age');
+        
+        
         $form = $this->createFormBuilder()
             ->add('nickname', 'text')
             ->add('text', 'textarea', array('attr' => array('cols' => 50, 'rows' => 8)))
@@ -57,10 +45,43 @@ class ArticleController extends BaseController
         return $form->createView();
     }
 
+    /**
+     * REST API -- zobrazeni stranky s clankem
+     * http://localhost/web/fos/web/app_dev.php/articles/2
+     * @param type $id
+     * @return type
+     */
+    public function getArticleAction($id)
+    {
+        return $this->render('AcmeBlogBundle:Article:article.html.twig', array(
+            'article' => $this->getDoctrine()->getEntityManager()
+                ->getRepository('AcmeBlogBundle:Article')->findById($id),  
+            'comments' => $this->getDoctrine()->getEntityManager()
+                ->getRepository('AcmeBlogBundle:Comment')->fetchAll(),
+            'form' => $this->addForm()
+        ));
+    }
+    
     
     /**
-     * REST test
+     * vybere nejnovejsi clanky
+     * @param int $count
+     * @return array
      */
+    public function getLatestAction($count)
+    {   
+        $em = $this->getDoctrine()->getEntityManager();
+        $articles = $em->getRepository('AcmeBlogBundle:Article')->findLatest($count);
+        
+        return $this->render('AcmeBlogBundle:Article:latestArticles.html.twig',
+            array('articles' => $articles)
+        );
+    }
+    
+    
+    /****************************************************************************************
+     * REST test
+     ****************************************************************************************/
     
     // http://localhost/web/fos/web/app_dev.php/show
     public function showAction()
@@ -85,6 +106,12 @@ class ArticleController extends BaseController
         return new Response('<html><body> delete_article '. $id .'</body></html>');
     }
     
+    // http://localhost/web/fos/web/app_dev.php/papers/7
+    public function getPaperAction($id)
+    {
+        return new Response('<html><body> Paper '. $id .'</body></html>');
+    }
+    
     /**
      * REST API -- zobrazeni vsech clanku
      * http://localhost/web/fos/web/app_dev.php/articles
@@ -92,56 +119,13 @@ class ArticleController extends BaseController
      */
     public function getArticlesAction()
     {	
-        return $this->render('AcmeBlogBundle:Homepage:test.html.twig', array(
+        return $this->render('AcmeBlogBundle:Homepage:article.html.twig', array(
             'articles' => $this->getDoctrine()->getRepository('AcmeBlogBundle:Article')
                 ->findBy(
                     array(),
                     array('id' => 'DESC')
                 ),
         ));	
-    }
-    
-    // http://localhost/web/fos/web/app_dev.php/papers/7
-    public function getPaperAction($id)
-    {
-        return new Response('<html><body> Paper '. $id .'</body></html>');
-    }
-    
-    
-    /**
-     * REST API -- zobrazeni clanku dle id
-     * http://localhost/web/fos/web/app_dev.php/articles/2
-     * @param type $id
-     * @return type
-     */
-    public function getArticleAction($id)
-    {
-        return $this->render('AcmeBlogBundle:Article:test.html.twig', array(
-            'article' => $this->getDoctrine()
-                ->getRepository('AcmeBlogBundle:Article')
-                ->findOneBy(array(
-                    'id' => $id)),
-            'form' => $this->addForm()
-        ));
-    }
-    
-    
-    /**
-     * vybere nejnovejsi clanky
-     * @param int $count
-     * @return array
-     */
-    public function getLatestAction($count)
-    {
-        $articles = $this->getDoctrine()->getManager()->createQuery('
-            SELECT a
-            FROM AcmeBlogBundle:Article a
-            ORDER BY a.date DESC			
-        ')->setMaxResults($count)->getResult();
-		
-        return $this->render('AcmeBlogBundle:Article:latestArticles.html.twig',
-            array('news' => $articles)
-        );
     }
     
 }

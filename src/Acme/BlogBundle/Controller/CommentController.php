@@ -12,8 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 class CommentController extends BaseController
 {
     
+    
+    
+    
+    /**
+     * REST api test
+     */
+    
     // http://localhost/web/fos/web/app_dev.php/articles/5/comments -- if multiple RESTful (parent :: child)
-    public function getCommentsAction($id)
+    public function getCommentsXAction($id)
     {
         return new Response('<html><body> get_comments ' . $id . '</body></html>');
     }
@@ -30,8 +37,5 @@ class CommentController extends BaseController
     {
         return new Response('<html><body> get_articles_comments ' . $id . '</body></html>');
     }
-   
-    
+     
 }
-
-?>

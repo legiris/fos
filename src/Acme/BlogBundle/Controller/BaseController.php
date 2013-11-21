@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseController extends Controller
 {
-
-	
+    /**
+    protected $em;
+    
+    public function __construct()
+    {   
+        $this->em = $this->getDoctrine()->getManager();   
+    }
+	*/
 }

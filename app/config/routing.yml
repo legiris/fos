@@ -13,7 +13,7 @@ acme_blog:
      type: rest
      resource: "@AcmeBlogBundle/Resources/config/routing.yml"
 
-# single RESTful     
-homepage:
-     type: rest
-     resource: Acme\BlogBundle\Controller\HomepageController     
+# single RESTful -- only for TEST     
+#homepage:
+#     type: rest
+#     resource: Acme\BlogBundle\Controller\HomepageController     

@@ -7,7 +7,7 @@
 <div class="article">
   <h1>{{ article.getTitle }}</h1>
   <p>{{ article.getText }}</p>
-  <p class="date">Přidáno: {{ article.getDate|date('d.m.Y | H:i') }} <span class="right"><a href="{{ path('acme_blog_homepage') }}">Zpět na hlavní stánku</a></span></p>
+  <p class="date">Přidáno: {{ article.getDate|date('d.m.Y | H:i') }} <span class="right"><a href="{{ path('get') }}">Zpět na hlavní stánku</a></span></p>
 </div>
 <div id="comments">
   <h3>Přidat komentář</h3>
@@ -25,5 +25,12 @@
   {{ form_end(form) }}
 
   <h3>Všechny komentáře (10)</h3>
+  
+  {% for comment in comments %}
+  <div class="comment">
+      <div class="header">@{{ comment.getNickname }}</div><div class="text">{{ comment.getText }}</div>
+  </div>
+  {% endfor %}
+  
 </div>
 {% endblock %}

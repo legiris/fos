@@ -1,7 +1,11 @@
 <?php
 
+namespace Acme\BlogBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\CommentRepository")
  * @ORM\Table(name="comment")
  */
 class Comment
@@ -9,7 +13,7 @@ class Comment
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(stategy="AUTO")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      */
     protected $id;
@@ -33,8 +37,8 @@ class Comment
     protected $date;
 
     /**
-     * @ManyToOne(targetEntity="Article")
-     * @JoinColumn(name="article_id", referencedColumnName="id")
+     * ManyToOne(targetEntity="Article")
+     * JoinColumn(name="article_id", referencedColumnName="id")
      * @var int
      */
     protected $article;

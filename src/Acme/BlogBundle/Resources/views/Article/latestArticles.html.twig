@@ -5,8 +5,8 @@
 {% block menu %}
   <ul>
     <li class="title">Nejnovější</li>
-    {% for new in news %}
-      <li><a href="{{ path('get_article', {'id': new.getId}) }}">{{ new.getTitle }}</a></li>
+    {% for article in articles %}
+      <li><a href="{{ path('get_article', {'id': article.getId}) }}">{{ article.getTitle }}</a></li>
     {% endfor %}
   </ul>
 {% endblock %}
