@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Admin
  */
 class ArticleController extends BaseController
-{
-
+{   
+    
     /**
      * vybere a zobrazi vsechny clanky, pro zobrazeni homepage
      * @return array

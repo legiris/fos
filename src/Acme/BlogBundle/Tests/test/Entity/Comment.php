@@ -3,13 +3,26 @@
 namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\CommentRepository")
+ * ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\CommentRepository")
  * @ORM\Table(name="comment")
  */
 class Comment
-{   
+{
+    /**
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="comment")
+     * @var array
+     */
+    protected $articles;
+    
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+    
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -35,6 +48,13 @@ class Comment
      * @var datetime
      */
     protected $date;
+
+    /**
+     * ManyToOne(targetEntity="Article")
+     * JoinColumn(name="article_id", referencedColumnName="id")
+     * @var int
+     */
+    protected $article;
 
 
     public function getId()
@@ -86,13 +106,5 @@ class Comment
     {
         $this->article = $article;
     }
-    
-    /**
-     * vlastnici strana je ta, kde je vazebni sloupec | table Comment: id --> article_id
-     * @ORM\ManyToOne(targetEntity="Article")
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
-     * @var Comment
-     */
-    protected $comment;
 
 }

@@ -20,13 +20,4 @@ class CommentRepository extends EntityRepository
             );
     }
     
-    /**
-    public function fetchCommentsByArticleId()
-    {
-        return $this->getEntityManager()->createQuery('
-        
-        ');
-    }
-    */
-    
 }

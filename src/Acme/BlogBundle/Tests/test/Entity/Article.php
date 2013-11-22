@@ -1,17 +1,25 @@
 <?php
 
-// WARNING - getEntityManager is deprecated since Symfony 2.1. Use getManager instead 
-
 namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+//use Symfony\Component\Validator\Constraints as Assert;
+//use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\ArticleRepository")
  * @ORM\Table(name="article")
  */
 class Article
-{   
+{
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="articles")
+     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
+     * @var array
+     */
+    protected $comments;
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
